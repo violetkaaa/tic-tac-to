@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desas</title>
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .poga {
+            display: block;
+            color: white;
+            font-size: 100px;
+            border: 2px dashed deeppink;
+            background-color: rgb(255, 207, 255);
+            width: 100%;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            transition: all 1s;
+
+        }
+
+        .poga:hover {
+
+            background-color: deeppink;
+            border-color: rgb(129, 17, 133);
+        }
+
+        .poga:active {
+            transform: scale(0.1) rotate(180deg);
+        }
+
+        .galds {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10%;
+            max-width: 40%;
+            margin-right: auto;
+            margin-left: auto;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Desu spēle</h1>
+    <!-- 0 -->
+    <div class="galds">
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+        <button class="poga b1"> &nbsp;</button>
+    </div>
+
+    <script>
+        let XvaiO = "X";
+        const pogas = document.querySelectorAll(".poga");
+
+        console.log(pogas);
+        pogas.forEach((poga) => {
+            poga.addEventListener("click", () => {
+                poga.innerText = XvaiO;
+                if (XvaiO === "X") {
+                    XvaiO = "O";
+                } else {
+                    XvaiO = "X";
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
