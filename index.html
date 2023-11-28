@@ -5,17 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital@1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
+        body {
+            background-color: #E1D1F0;
+        }
+
         h1 {
             text-align: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 70px;
+            color: #C2A3F5;
+            animation-name: shakeY;
+            animation-duration: 1s;
         }
 
         .poga {
             display: block;
-            color: white;
+            color: #C2A3F5;
             font-size: 100px;
-            border: 2px dashed deeppink;
+            border: 2px dashed #C2A3F5;
             background-color: rgb(255, 207, 255);
             width: 100%;
             aspect-ratio: 1/1;
@@ -26,7 +41,7 @@
 
         .poga:hover {
 
-            background-color: deeppink;
+            background-color: #C2A3F5;
             border-color: rgb(129, 17, 133);
         }
 
@@ -41,9 +56,42 @@
             max-width: 40%;
             margin-right: auto;
             margin-left: auto;
+            animation-name: shakeY;
+            animation-duration: 1s;
+        }
 
+        @keyframes ielido {
+            0% {
+                transform: translateX(-100%) scale(0.1);
+            }
+
+            100% {
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes ielidoNoKreisas {
+            0% {
+                transform: translateX(-100%) scale(0.1);
+            }
+
+            100% {
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes ielidoNoLabas {
+            0% {
+                transform: translateX(100%) scale(0.1);
+            }
+
+            100% {
+                transform: translateX(0) scale(1);
+            }
         }
     </style>
+
+
 
 </head>
 
@@ -62,8 +110,69 @@
         <button class="poga b1"> &nbsp;</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
     <script>
         let XvaiO = "X";
+        let uzvarasIespejas = [
+            [0, 1, 2], // 1.rinda 
+            [3, 4, 5], // 2.rinda
+            [6, 7, 8], // 3.rinda 
+            [0, 3, 6], // 1.kolonnas
+            [1, 4, 7], // 2.kolonnas
+            [2, 5, 8], // 3.kolonnas
+            [0, 4, 8], // 1.diagonāle
+            [2, 4, 6], // 2.diagonāle
+        ];
+
+        function sautkonfetti() {
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function () {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                // since particles fall down, start a bit higher than random
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+        }
+
+        function parbaudituzvaru() {
+            uzvarasIespejas.forEach((iespeja) => {
+                let x = 0;
+                let o = 0;
+                iespeja.forEach((index) => {
+                    if (document.querySelectorAll('.poga')[index].innerText === 'X') {
+                        x++;
+                    } else if (document.querySelectorAll('.poga')[index].innerText === 'O') {
+                        o++;
+                    }
+
+                    if (x === 3) {
+                        alert('Uzvareja X');
+                        sautkonfetti();
+                    }
+                    else if (o === 3) {
+                        alert('Uzvareja O');
+                        sautkonfetti();
+                    }
+
+                });
+            });
+        }
+
+
         const pogas = document.querySelectorAll(".poga");
 
         console.log(pogas);
@@ -75,6 +184,8 @@
                 } else {
                     XvaiO = "X";
                 }
+                parbaudituzvaru();
+                //let confetti = new
             });
         });
 
